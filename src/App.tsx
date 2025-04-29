@@ -1,15 +1,38 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import TaskItem from "./taskItem";
+
+interface Task {
+  text: string;
+  createdAt: Date;
+}
 
 function App() {
-  const [task, setTask] = useState('');
-  const [tasks, setTasks] = useState<string[]>([]);
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [error, setError] = useState<string>("");
 
   const handleAddTask = () => {
-    if (task.trim() !== '') {
-      setTasks([...tasks, task]);
-      setTask('');
+    const trimmedTask = task.trim();
+
+    if (trimmedTask === "") {
+      setError("La tarea no puede estar vacía.");
+      return;
     }
+
+    if (tasks.some((t) => t.text === trimmedTask)) {
+      setError("La tarea ya existe.");
+      return;
+    }
+
+    const newTask: Task = {
+      text: trimmedTask,
+      createdAt: new Date(),
+    };
+
+    setTasks([...tasks, newTask]);
+    setTask("");
+    setError("");
   };
 
   return (
@@ -24,9 +47,16 @@ function App() {
         />
         <button onClick={handleAddTask}>Agregar</button>
       </div>
+
+      {error && <p className="error">{error}</p>}
+
+      <hr />
+
+      <p className="task-counter">Tareas: {tasks.length}</p>
+
       <ul>
         {tasks.map((t, index) => (
-          <li key={index}>{t}</li>
+          <TaskItem key={index} task={t.text} createdAt={t.createdAt} />
         ))}
       </ul>
     </>

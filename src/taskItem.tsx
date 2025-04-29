@@ -1,17 +1,22 @@
-import React from 'react';
+import React from "react";
 
 interface TaskItemProps {
   task: string;
-  onDelete: () => void;
+  createdAt: Date;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, createdAt }) => {
+  const formattedDate = new Intl.DateTimeFormat("es-PE", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(new Date(createdAt));
+
   return (
     <li className="task-item">
-      <span>{task}</span>
-      <button className="delete-button" onClick={onDelete}>
-        Delete
-      </button>
+      <div>
+        <strong>{task}</strong>
+        <div className="timestamp">{formattedDate}</div>
+      </div>
     </li>
   );
 };
