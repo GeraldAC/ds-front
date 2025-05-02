@@ -40,7 +40,7 @@ input[type="text"] {
   border-radius: 4px;
   font-size: 1rem;
   flex: 1;
-  min-width: 200px;
+  min-width: 300px;
   background-color: var(--white);
   color: var(--text-dark);
 }
@@ -58,6 +58,11 @@ button {
 
 button:hover {
   background-color: #d82153;
+  border: var(--primary);
+}
+
+button:focus {
+  outline: 1px solid #d82153;
 }
 
 .error {
