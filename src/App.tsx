@@ -20,7 +20,7 @@ function App() {
       return;
     }
 
-    if (tasks.some((t) => t.text === trimmedTask)) {
+    if (tasks.some((t) => t.text.toUpperCase() === trimmedTask.toUpperCase())) {
       setError("La tarea ya existe.");
       return;
     }
