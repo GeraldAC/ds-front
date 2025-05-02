@@ -35,6 +35,10 @@ function App() {
     setError("");
   };
 
+  const handleDeleteTask = (text: string) => {
+    setTasks(tasks.filter((t) => t.text !== text));
+  };
+
   return (
     <>
       <h1>To-Do List</h1>
@@ -56,7 +60,12 @@ function App() {
 
       <ul>
         {tasks.map((t, index) => (
-          <TaskItem key={index} task={t.text} createdAt={t.createdAt} />
+          <TaskItem
+            key={index}
+            task={t.text}
+            createdAt={t.createdAt}
+            onDelete={() => handleDeleteTask(t.text)}
+          />
         ))}
       </ul>
     </>
