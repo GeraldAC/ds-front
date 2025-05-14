@@ -79,7 +79,7 @@ input[type="datetime-local"] {
   border-radius: 5px;
   width: 100%;
   max-width: 300px;
-  background-color: var(--text-dark);
+  background-color: var(--primary);
   color: var(--white);
 }
 
@@ -280,4 +280,50 @@ ul {
   background-color: transparent;
   color: var(--safe-color);
   border: 2px solid var(--safe-color);
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  transition: transform 0.2s ease;
+}
+
+.profile-card:hover {
+  transform: scale(1.01);
+}
+
+.profile-card img.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  object-fit: cover;
+}
+
+.profile-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.profile-card p {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.profile-card p strong {
+  color: var(--primary);
+}
+
+.completed {
+  text-decoration: line-through;
+  color: var(--primary);
+  opacity: 0.6;
 }

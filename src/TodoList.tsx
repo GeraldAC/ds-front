@@ -1,31 +1,39 @@
 import React from "react";
-import TaskItem from "./TaskItem";
+import TodoItem from "./TodoItem";
 
 interface Task {
   text: string;
   createdAt: Date;
+  completed: boolean;
 }
 
-interface TaskListProps {
+interface TodoListProps {
   tasks: Task[];
   onDelete: (index: number) => void;
   onEdit: (index: number, newText: string, newDate: Date) => void;
+  onToggleComplete: (index: number) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, onDelete, onEdit }) => {
+const TodoList: React.FC<TodoListProps> = ({
+  tasks,
+  onDelete,
+  onEdit,
+  onToggleComplete,
+}) => {
   return (
     <ul className="task-list">
       {tasks.map((task, index) => (
-        <TaskItem
+        <TodoItem
           key={index}
           task={task}
           index={index}
           onDelete={onDelete}
           onEdit={onEdit}
+          onToggleComplete={onToggleComplete}
         />
       ))}
     </ul>
   );
 };
 
-export default TaskList;
+export default TodoList;

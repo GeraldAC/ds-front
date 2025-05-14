@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import "./App.css";
-import TaskList from "./TaskList";
+import "./TodoApp.css";
 import { AlertCircle } from "lucide-react";
+import TodoList from "./TodoList";
 
 interface Task {
   text: string;
   createdAt: Date;
+  completed: boolean;
 }
 
 // Interfaz para los datos guardados en localStorage
@@ -14,7 +15,7 @@ interface StoredTask {
   createdAt: string; // En localStorage se guarda como string
 }
 
-function App() {
+function TodoApp() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState<string>("");
@@ -64,6 +65,7 @@ function App() {
     const newTask: Task = {
       text: trimmedTask,
       createdAt: new Date(),
+      completed: false,
     };
 
     setTasks([...tasks, newTask]);
@@ -95,8 +97,8 @@ function App() {
     }
 
     const currentDate = new Date();
-    if (newDate > currentDate) {
-      setError("La fecha no puede ser futura.");
+    if (newDate < currentDate) {
+      setError("La fecha no puede ser pasada.");
       return;
     }
 
@@ -106,13 +108,42 @@ function App() {
     }
 
     const updatedTasks = [...tasks];
-    updatedTasks[index] = { text: trimmedText, createdAt: newDate };
+    updatedTasks[index] = {
+      text: trimmedText,
+      createdAt: newDate,
+      completed: true,
+    };
     setTasks(updatedTasks);
     setError("");
   };
 
+  const handleToggleComplete = (index: number) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].completed = !updatedTasks[index].completed;
+    setTasks(updatedTasks);
+  };
+
+  const user = {
+    name: "Gerald Antonio Cusacani Gonzales",
+    email: "200332@unsaac.edu.pe",
+    role: "Estudiante de Ing. Informática y de Sistemas",
+    avatar: "https://i.pravatar.cc/100?img=3", // Imagen aleatoria
+  };
+
   return (
     <>
+      <h1>Perfil de Usuario</h1>
+      <div className="profile-card">
+        <img src={user.avatar} alt="Avatar" className="avatar" />
+        <div>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+          <p>
+            <strong>Rol:</strong> {user.role}
+          </p>
+        </div>
+      </div>
+      <hr />
       <h1>Lista de Tareas</h1>
       <div className="card">
         <input
@@ -139,13 +170,14 @@ function App() {
       <hr />
       <p className="task-counter">Tareas: {tasks.length}</p>
 
-      <TaskList
+      <TodoList
         tasks={tasks}
         onDelete={handleDeleteTask}
         onEdit={handleEditTask}
+        onToggleComplete={handleToggleComplete}
       />
     </>
   );
 }
 
-export default App;
+export default TodoApp;

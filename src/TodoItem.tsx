@@ -4,20 +4,23 @@ import React, { useState } from "react";
 interface Task {
   text: string;
   createdAt: Date;
+  completed: boolean;
 }
 
-interface TaskItemProps {
+interface TodoItemProps {
   task: Task;
   index: number;
   onDelete: (index: number) => void;
   onEdit: (index: number, newText: string, newDate: Date) => void;
+  onToggleComplete: (index: number) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({
+const TodoItem: React.FC<TodoItemProps> = ({
   task,
   index,
   onDelete,
   onEdit,
+  onToggleComplete,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(task.text);
@@ -61,7 +64,12 @@ const TaskItem: React.FC<TaskItemProps> = ({
         </div>
       ) : (
         <div className="view-mode">
-          <div className="task-info">
+          <input
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => onToggleComplete(index)}
+          />
+          <div className={`task-info ${task.completed ? "completed" : ""}`}>
             <strong>{task.text}</strong>
             <div className="timestamp">{formattedDate}</div>
           </div>
@@ -79,4 +87,4 @@ const TaskItem: React.FC<TaskItemProps> = ({
   );
 };
 
-export default TaskItem;
+export default TodoItem;
