@@ -12,7 +12,8 @@ interface Task {
 // Interfaz para los datos guardados en localStorage
 interface StoredTask {
   text: string;
-  createdAt: string; // En localStorage se guarda como string
+  createdAt: string;
+  completed: boolean;
 }
 
 function TodoApp() {
@@ -31,6 +32,7 @@ function TodoApp() {
           (task: StoredTask) => ({
             text: task.text,
             createdAt: new Date(task.createdAt),
+            completed: task.completed,
           })
         );
         setTasks(parsedTasks);
@@ -111,7 +113,7 @@ function TodoApp() {
     updatedTasks[index] = {
       text: trimmedText,
       createdAt: newDate,
-      completed: true,
+      completed: updatedTasks[index].completed,
     };
     setTasks(updatedTasks);
     setError("");

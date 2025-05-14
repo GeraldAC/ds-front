@@ -283,8 +283,6 @@ ul {
 }
 
 .profile-card {
-  display: flex;
-  align-items: center;
   gap: 1.5rem;
   padding: 1.5rem;
   background-color: #f9f9f9;
@@ -324,6 +322,6 @@ ul {
 
 .completed {
   text-decoration: line-through;
-  color: var(--primary);
-  opacity: 0.6;
+  color: var(--primary-sec);
+  opacity: 0.5;
 }
